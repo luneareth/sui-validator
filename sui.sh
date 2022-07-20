@@ -3,7 +3,7 @@ build="devnet"
 tags="0.6.1"
 version="${build}-${tags}"
 blob_url="https://github.com/MystenLabs/sui-genesis/blob/tharbert/${version}/devnet/genesis.blob?raw=true"
-docker_compose=file
+docker_compose="file"
 
 if ! [ -f docker-compose.yaml ]
 then
