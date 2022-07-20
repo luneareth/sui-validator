@@ -15,7 +15,7 @@ version: "3.9"
 services:
   fullnode:
     container_name: sui-validator
-    image: mysten/sui-node:stable
+    image: mysten/sui-node:main
     ports:
     - "9000:9000"
     - "9184:9184"
@@ -58,3 +58,4 @@ docker-compose up -d
 container_name=`docker ps | grep sui |  awk '{print $1}'`
 docker update --restart=unless-stopped ${container_name}
 docker logs -f --tail -n10 ${container_name}
+
