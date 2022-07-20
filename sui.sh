@@ -15,7 +15,7 @@ version: "3.9"
 services:
   fullnode:
     container_name: sui-validator
-    image:  mysten/sui-node:stable
+    image: mysten/sui-node:stable
     ports:
     - "9000:9000"
     - "9184:9184"
@@ -44,10 +44,10 @@ sed -i 's/127.0.0.1:9000/0.0.0.0:9000/' fullnode.yaml
 fi
 if ! [ -f genesis.blob ]
 then
-wget ${blob_url} -o genesis.blob
+wget ${blob_url} -O genesis.blob
 fi
 check_network=`docker network ls | grep sui-network | wc -l`
-if [ ${check_network} -neq 0 ]
+if [ ${check_network} -neq 0 ] 2> /dev/null
 then
   docker network rm sui-network
   docker network create sui-network
@@ -57,3 +57,4 @@ fi
 docker-compose up -d
 container_name=`docker ps | grep sui |  awk '{print $1}'`
 docker update --restart=unless-stopped ${container_name}
+docker logs -f --tail -n10 ${container_name}
