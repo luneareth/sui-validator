@@ -2,7 +2,7 @@
 build="devnet"
 tags="0.6.1"
 version="${build}-${tags}"
-blob_url="https://github.com/MystenLabs/sui-genesis/blob/tharbert/${version}/devnet/genesis.blob?raw=true"
+blob_url="https://github.com/MystenLabs/sui-genesis/blob/tharbert/${version}/${build}/genesis.blob?raw=true"
 docker_compose="file"
 
 if ! [ -f docker-compose.yaml ]
@@ -44,7 +44,7 @@ sed -i 's/127.0.0.1:9000/0.0.0.0:9000/' fullnode.yaml
 fi
 if ! [ -f genesis.blob ]
 then
-wget ${blob_url}
+wget ${blob_url} -o genesis.blob
 fi
 check_network=`docker network ls | grep sui-network | wc -l`
 if [ ${check_network} -neq 0 ]
@@ -55,6 +55,5 @@ else
   docker network create sui-network
 fi
 docker-compose up -d
-container_name=`docker ps | grep sui |  awk '{print $1}i'`
+container_name=`docker ps | grep sui |  awk '{print $1}'`
 docker update --restart=unless-stopped ${container_name}
-
